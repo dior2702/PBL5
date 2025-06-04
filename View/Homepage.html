@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ - KEVFB</title>
+    <link rel="stylesheet" href="../static/css/homepage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../static/css/header.css">
+<script src="../static/js/header.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <link rel="stylesheet" href="../static/css/form.css">
+    <script src="../static/js/homepage.js" defer></script>
+    <script src="../static/js/login.js"></script>
+    <script src="../static/js/signup.js"></script>
+</head>
+<body>
+    <div id="header">
+    </div>
+    <div class="header">
+        <img src="../static/img/logo.svg" alt="Logo" class="logo">
+    
+   
+        <div class="buttons">
+    <button class="login-button" id="showLoginForm">Login</button>
+    <button class="signup-button" id="showSignupForm">Sign up</button>
+</div>
+    </div>
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <div class="container">
+        <div class="intro">
+            <div class="intro-text">
+                <h1>Giới thiệu công ty</h1>
+                <p>
+                    Chào mừng bạn đến với hệ thống chấm công thông minh của KEVFB – giải pháp hiện đại giúp doanh nghiệp tối ưu hóa quy trình quản lý thời gian làm việc của nhân viên. Với giao diện thân thiện, dễ sử dụng và tính năng linh hoạt, hệ thống KEVFB hỗ trợ chấm công nhanh chóng, theo dõi ca làm việc, xuất báo cáo chi tiết và đồng bộ dữ liệu theo thời gian thực.
+                Chúng tôi cam kết mang đến trải nghiệm quản lý nhân sự hiệu quả, minh bạch và chính xác nhất cho doanh nghiệp của bạn.
+                </p>
+            </div>
+            <div class="intro-image">
+                <img src="../static/img/intro.jpg" alt="Giới thiệu công ty">
+            </div>
+        </div>
+    </div>
+    <!-- ...existing code... -->
+<div class="form-popup" id="loginForm">
+    <form class="form-container">
+        <h2>Đăng nhập</h2>
+        <label for="email"><i class="fas fa-envelope"></i> Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="password"><i class="fas fa-lock"></i> Mật khẩu:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Đăng nhập</button>
+        <button type="button" class="btn cancel" onclick="closeForm('loginForm')"><i class="fas fa-times"></i></button>
+    </form>
+</div>
+<!-- ...existing code... -->
+   <!-- ...existing code... -->
+<div class="form-popup" id="signupForm">
+    <form class="form-container" id="signupFormElement">
+        <h2>Đăng ký</h2>
+        <label for="fullName"><i class="fas fa-user"></i> Họ tên:</label>
+        <input type="text" id="fullName" name="fullName" required>
+        <label for="signupEmail"><i class="fas fa-envelope"></i> Email:</label>
+        <input type="email" id="signupEmail" name="email" required>
+        <label for="password"><i class="fas fa-lock"></i> Mật khẩu:</label>
+        <input type="password" id="signupPassword" name="password" required>
+        <label for="department"><i class="fas fa-building"></i> Phòng ban:</label>
+        <select id="department" name="department" required>
+        <option value="">-- Chọn phòng ban --</option>
+        <option value="HR">HR</option>
+        <option value="IT">IT</option>
+        <option value="Marketing">Marketing</option>
+        <option value="Sales">Sales</option>
+        <option value="Customer Service">Customer Service</option>
+        <option value="Financial">Financial</option>
+        <option value="Accounting">Accounting</option>
+        </select>
+        <label for="position"><i class="fas fa-briefcase"></i> Chức vụ:</label>
+        <input type="text" id="position" name="position" required>
+        <label for="employeeId"><i class="fas fa-id-badge"></i> Mã nhân viên:</label>
+        <input type="text" id="employeeId" name="employeeId" required>
+        <button type="submit">Đăng ký</button>
+        <button type="button" class="btn cancel" onclick="closeForm('signupForm')"><i class="fas fa-times"></i></button>
+    </form>
+</div>
+
+</body>
+</html>

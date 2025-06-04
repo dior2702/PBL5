@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department - KEVFB</title>
+    <link rel="stylesheet" href="../static/css/department.css">
+    <link rel="stylesheet" href="../static/css/header.css">
+    <script src="../static/js/header.js" defer></script>
+    <script src="../static/js/department.js" defer></script>
+</head>
+<body>
+    <div class="header">
+        <img src="../static/img/logo.svg" alt="Logo" class="logo">
+        <nav>
+            <ul>
+                <li><a href="Dashboard.html">Dashboard</a></li>
+                <li><a href="Department.html">Department</a></li>
+                <li><a href="Salary.html">Salary</a></li>
+            </ul>
+        </nav>
+        <div class="user-avatar">
+            <img src="../static/img/avt.jpg" alt="User Avatar">
+        </div>
+    </div>
+    <div class="container">
+        <!-- Thanh tìm kiếm -->
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Search employee name">
+            <button class="btn-search">Search</button>
+            <button class="btn-add">Add Department</button>
+        </div>
+
+        <!-- Hàng chứa các phần Name, Department, Phone Number -->
+        <div class="info-row header-row">
+            <div class="info-item">Name</div>
+            <div class="info-item">Department</div>
+            <div class="info-item">Phone Number</div>
+        </div>
+
+        <!-- Dữ liệu mẫu -->
+<div class="info-row" data-name="Phan Hùng">
+    <div class="info-item">Phan Hùng</div>
+    <div class="info-item">IT</div>
+    <div class="info-item">0123456789</div>
+</div>
+<div class="info-row" data-name="Lê Minh">
+    <div class="info-item">Lê Minh</div>
+    <div class="info-item">HR</div>
+    <div class="info-item">0987654321</div>
+</div>
+<div class="info-row" data-name="Lê Nhật">
+    <div class="info-item">Lê Nhật</div>
+    <div class="info-item">Finance</div>
+    <div class="info-item">0912345678</div>
+</div>
+    </div>
+    <div class="popup" id="add-department-popup">
+        <div class="popup-content">
+            <h2>Add Department</h2>
+            <form id="add-department-form">
+                <label for="department-name">Department Name:</label>
+                <input type="text" id="department-name" name="department-name" required>
+                <label for="phone-number">Phone Number:</label>
+                <input type="text" id="phone-number" name="phone-number" required>
+                <div class="popup-buttons">
+                    <button type="submit" class="btn-submit">Add</button>
+                    <button type="button" class="btn-cancel" id="cancel-popup">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

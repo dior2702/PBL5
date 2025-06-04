@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - KEVFB</title>
+    <link rel="stylesheet" href="../static/css/dashboard.css">
+    <link rel="stylesheet" href="../static/css/header.css">
+    <script src="../static/js/header.js" defer></script>
+    <script src="../static/js/userdashboard.js" defer></script>
+</head>
+<body>
+    <div class="header">
+        <img src="../static/img/logo.svg" alt="Logo" class="logo">
+        <nav>
+            <ul>
+                <li><a href="UserDashboard.html">Dashboard</a></li>
+                <li><a href="Profile.html">Profile</a></li>
+            </ul>
+        </nav>
+        <div class="user-avatar">
+            <img src="../static/img/avt.jpg" alt="User Avatar">
+            <div class="user-menu" id="user-menu">
+                <ul>
+                    <li id="logout">Đăng xuất</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <!-- Box điều chỉnh thời gian -->
+        <div class="time-box">
+            <label for="date">Chọn ngày:</label>
+            <input type="date" id="date" name="date" max="">
+        </div>
+        <script>
+            // Tự động thiết lập giá trị max cho input date là ngày hiện tại
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').setAttribute('max', today);
+        </script>
+
+        <!-- Hàng chứa các phần Name, Department, Login Time, Status -->
+        <div class="info-row header-row">
+            <div class="info-item">Name</div>
+            <div class="info-item">Department</div>
+            <div class="info-item">Login Time</div>
+            <div class="info-item">Logout Time</div>
+            <div class="info-item">Status</div>
+        </div>
+    </div>
+</body>
+</html>

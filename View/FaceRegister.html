@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đăng ký khuôn mặt</title>
+  <link rel="stylesheet" href="../static/css/faceregister.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Đăng ký khuôn mặt</h2>
+    <div class="instructions">
+      <p>Vui lòng chụp ảnh khuôn mặt ở các góc sau:</p>
+      <ul>
+        <li>Chính diện</li>
+        <li>Quay trái</li>
+        <li>Quay phải</li>
+        <li>Ngửa lên</li>
+        <li>Cúi xuống</li>
+      </ul>
+    </div>
+    <div class="webcam-section">
+      <video id="webcam" autoplay playsinline width="640" height="480"></video>
+      <canvas id="canvas" style="display:none;"></canvas>
+    </div>
+    <div class="button-group">
+      <button onclick="registerFace('front')">Chụp chính diện</button>
+      <button onclick="registerFace('left')">Quay trái</button>
+      <button onclick="registerFace('right')">Quay phải</button>
+      <button onclick="registerFace('up')">Ngửa lên</button>
+      <button onclick="registerFace('down')">Cúi xuống</button>
+    </div>
+    <div id="result"></div>
+  </div>
+  <script src="../static/js/faceregister.js"></script>
+  <script>
+    window.onload = startWebcam;
+  </script>
+</body>
+</html>
