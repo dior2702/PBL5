@@ -195,3 +195,36 @@ body {
     background-color: #f44336;
     color: white;
 }
+/* --Profile-- */
+.user-avatar {
+  position: relative; /* Đặt avatar làm gốc tham chiếu */
+}
+.user-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #000000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 150px;
+  border-radius: 4px;
+}
+
+.user-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.user-menu ul li {
+  color: black;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.user-menu ul li:hover {
+  background-color: #f0f0f0;
+}
