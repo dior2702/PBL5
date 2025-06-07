@@ -22,20 +22,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 const data = await response.json();
                 console.log('Login response:', data);
 
-                if (response.ok) {
-    if (data.token) {
-        localStorage.setItem('token', data.token);
-    }
-    // Kiểm tra role và điều hướng phù hợp
-    
-    if (data.role && data.role.trim().toLowerCase() === 'admin') {
-        window.location.href = 'Dashboard.html';
-    } else {
-        window.location.href = 'UserDashboard.html';
-    }
-} else {
-    alert(data.message || 'Đăng nhập thất bại!');
-}
+                if (response.ok && data.success) {
+                    const user = data.data;
+                    if (user.token) {
+                        localStorage.setItem('token', user.token);
+                    }
+                    // Kiểm tra role và điều hướng phù hợp
+                    if (user.role && user.role.trim().toLowerCase() === 'admin') {
+                        window.location.href = 'Dashboard.html';
+                    } else {
+                        window.location.href = 'UserDashboard.html';
+                    }
+                } else {
+                    alert(data.message || 'Đăng nhập thất bại!');
+                }
             } catch (error) {
                 alert('Lỗi kết nối đến server!');
             }
