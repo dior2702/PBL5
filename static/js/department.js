@@ -17,8 +17,8 @@ document.querySelector('.btn-search').addEventListener('click', function () {
             if (!res.ok) throw new Error('User not found');
             return res.json();
         })
-        .then(user => {
-            renderUsers([user]);
+        .then(result => {
+            renderUsers([result.data]);
         })
         .catch(() => {
             userList.innerHTML = '<div style="text-align:center;color:red;">Không tìm thấy nhân viên</div>';
@@ -52,8 +52,8 @@ fetch('http://localhost:3000/api/admin/users', {
     }
 })
     .then(res => res.json())
-    .then(data => {
-        allUsers = data;
+    .then(result => {
+        allUsers = result.data;
         renderUsers(allUsers);
     });
 
