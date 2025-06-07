@@ -20,15 +20,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
                 const data = await response.json();
+                console.log('Login response:', data);
 
                 if (response.ok) {
-                    if (data.token) {
-                        localStorage.setItem('token', data.token);
-                    }
-                    window.location.href = 'UserDashboard.html';
-                } else {
-                    alert(data.message || 'Đăng nhập thất bại!');
-                }
+    if (data.token) {
+        localStorage.setItem('token', data.token);
+    }
+    // Kiểm tra role và điều hướng phù hợp
+    
+    if (data.role === 'admin') {
+        window.location.href = 'Dashboard.html';
+    } else {
+        window.location.href = 'UserDashboard.html';
+    }
+} else {
+    alert(data.message || 'Đăng nhập thất bại!');
+}
             } catch (error) {
                 alert('Lỗi kết nối đến server!');
             }
