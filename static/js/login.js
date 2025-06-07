@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Kiểm tra role và điều hướng phù hợp
     
     if (data.role === 'admin') {
-        window.location.href = 'Dashboard.html';
+        window.location.href = 'Department.html';
     } else {
         window.location.href = 'UserDashboard.html';
     }
