@@ -48,7 +48,7 @@ function registerFace(angle) {
   // Log ra debug console của trình duyệt
   console.debug("Token hiện tại:", token);
 
-  fetch("http://localhost:3001/api/face/register", {
+  fetch("http://localhost:3000/api/face/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

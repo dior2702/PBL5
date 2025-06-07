@@ -2,7 +2,7 @@
 function checkIn() {
   const base64Image = captureImage();
 
-  fetch("http://localhost:3001/api/attendance/check-in", {
+  fetch("http://localhost:3000/api/attendance/check-in", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
