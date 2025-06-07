@@ -1,53 +1,54 @@
-// Xử lý sự kiện tìm kiếm
+//Sự kiện tìm kiếm bằng tìm kiếm theo userId qua API
 document.querySelector('.btn-search').addEventListener('click', function () {
-    const searchValue = document.getElementById('search').value.toLowerCase();
-    const rows = document.querySelectorAll('.info-row[data-name]');
+    const searchValue = document.getElementById('search').value.trim();
+    const userList = document.getElementById('user-list');
+    if (searchValue === '') {
+        // Nếu không nhập gì, hiển thị lại toàn bộ danh sách
+        renderUsers(allUsers);
+        return;
+    }
+    fetch(`http://localhost:3000/api/admin/users/${searchValue}`)
+        .then(res => {
+            if (!res.ok) throw new Error('User not found');
+            return res.json();
+        })
+        .then(user => {
+            // Nếu API trả về 1 user object
+            renderUsers([user]);
+        })
+        .catch(() => {
+            userList.innerHTML = '<div style="text-align:center;color:red;">Không tìm thấy nhân viên</div>';
+        });
+});
 
-    rows.forEach(row => {
-        const name = row.getAttribute('data-name').toLowerCase();
-        if (name.includes(searchValue)) {
-            row.style.display = 'flex'; // Hiển thị hàng phù hợp
-        } else {
-            row.style.display = 'none'; // Ẩn hàng không phù hợp
-        }
+// Hàm render danh sách nhân viên
+function renderUsers(users) {
+    const userList = document.getElementById('user-list');
+    userList.innerHTML = '';
+    users.forEach(user => {
+        const row = document.createElement('div');
+        row.classList.add('info-row');
+        row.setAttribute('data-name', user.name);
+        row.innerHTML = `
+            <div class="info-item">${user.userId}</div>
+            <div class="info-item">${user.name}</div>
+            <div class="info-item">${user.email}</div>
+            <div class="info-item">${user.phone}</div>
+        `;
+        userList.appendChild(row);
     });
-});
+}
 
-// Hiển thị popup khi nhấn nút "Add Department"
-document.querySelector('.btn-add').addEventListener('click', () => {
-    document.getElementById('add-department-popup').style.display = 'flex';
-});
+// Lấy danh sách nhân viên từ API khi trang tải
+let allUsers = [];
+fetch('http://localhost:3000/api/admin/users')
+    .then(res => res.json())
+    .then(data => {
+        allUsers = data;
+        renderUsers(allUsers);
+    });
 
-// Ẩn popup khi nhấn nút "Cancel"
-document.getElementById('cancel-popup').addEventListener('click', () => {
-    document.getElementById('add-department-popup').style.display = 'none';
-});
 
-// Xử lý thêm department mới
-document.getElementById('add-department-form').addEventListener('submit', (event) => {
-    event.preventDefault(); // Ngăn chặn reload trang
-
-    // Lấy giá trị từ form
-    const departmentName = document.getElementById('department-name').value;
-    const phoneNumber = document.getElementById('phone-number').value;
-
-    // Tạo một hàng mới
-    const newRow = document.createElement('div');
-    newRow.classList.add('info-row');
-    newRow.setAttribute('data-name', departmentName);
-    newRow.innerHTML = `
-        <div class="info-item">${departmentName}</div>
-        <div class="info-item">New</div>
-        <div class="info-item">${phoneNumber}</div>
-    `;
-
-    // Thêm hàng mới vào container
-    document.querySelector('.container').appendChild(newRow);
-
-    // Ẩn popup và reset form
-    document.getElementById('add-department-popup').style.display = 'none';
-    document.getElementById('add-department-form').reset();
-});
 // Xử lý sự kiện click vào avatar để hiển thị popup
 document.addEventListener('DOMContentLoaded', () => {
   const avatar = document.querySelector('.user-avatar img');

@@ -37,44 +37,15 @@
             <button class="btn-add">Add Department</button>
         </div>
 
-        <!-- Hàng chứa các phần Name, Department, Phone Number -->
+        <!-- Hàng chứa các phần ID, Name, Email, Phone -->
         <div class="info-row header-row">
+            <div class="info-item">ID</div>
             <div class="info-item">Name</div>
-            <div class="info-item">Department</div>
-            <div class="info-item">Phone Number</div>
+            <div class="info-item">Email</div>
+            <div class="info-item">Phone</div>
         </div>
 
-        <!-- Dữ liệu mẫu -->
-<div class="info-row" data-name="Phan Hùng">
-    <div class="info-item">Phan Hùng</div>
-    <div class="info-item">IT</div>
-    <div class="info-item">0123456789</div>
-</div>
-<div class="info-row" data-name="Lê Minh">
-    <div class="info-item">Lê Minh</div>
-    <div class="info-item">HR</div>
-    <div class="info-item">0987654321</div>
-</div>
-<div class="info-row" data-name="Lê Nhật">
-    <div class="info-item">Lê Nhật</div>
-    <div class="info-item">Finance</div>
-    <div class="info-item">0912345678</div>
-</div>
-    </div>
-    <div class="popup" id="add-department-popup">
-        <div class="popup-content">
-            <h2>Add Department</h2>
-            <form id="add-department-form">
-                <label for="department-name">Department Name:</label>
-                <input type="text" id="department-name" name="department-name" required>
-                <label for="phone-number">Phone Number:</label>
-                <input type="text" id="phone-number" name="phone-number" required>
-                <div class="popup-buttons">
-                    <button type="submit" class="btn-submit">Add</button>
-                    <button type="button" class="btn-cancel" id="cancel-popup">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
+         <div id="user-list"></div>
+   
 </body>
 </html>
