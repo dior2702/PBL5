@@ -39,6 +39,10 @@ function renderUsers(users) {
             <div class="info-item">${user.name}</div>
             <div class="info-item">${user.email}</div>
             <div class="info-item">${user.phone}</div>
+            <div class="info-item">
+                <button class="btn-edit" data-id="${user.userId}" title="Sửa" style="background:none;border:none;cursor:pointer;font-size:18px;">✏️</button>
+                <button class="btn-delete" data-id="${user.userId}" title="Xóa" style="background:none;border:none;cursor:pointer;font-size:18px;">🗑️</button>
+            </div>
         `;
         userList.appendChild(row);
     });
@@ -79,3 +83,79 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = 'Homepage.html';
   });
 });
+let editingUserId = null;
+
+// Sự kiện click nút Sửa và Xóa
+document.getElementById('user-list').addEventListener('click', function(e) {
+    if (e.target.classList.contains('btn-edit')) {
+        // Sửa
+        const userId = e.target.getAttribute('data-id');
+        const user = allUsers.find(u => u.userId === userId);
+        if (!user) return;
+        editingUserId = userId;
+        document.getElementById('edit-name').value = user.name;
+        document.getElementById('edit-email').value = user.email;
+        document.getElementById('edit-phone').value = user.phone;
+        document.getElementById('edit-popup').style.display = 'flex';
+    }
+    if (e.target.classList.contains('btn-delete')) {
+        // Xóa
+        const userId = e.target.getAttribute('data-id');
+        if (confirm('Bạn có chắc chắn muốn xóa nhân viên này?')) {
+            fetch(`http://localhost:3000/api/admin/users/${userId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(res => res.json())
+            .then(() => {
+                // Xóa thành công, reload lại danh sách
+                return fetch('http://localhost:3000/api/admin/users', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+            })
+            .then(res => res.json())
+            .then(result => {
+                allUsers = result.data;
+                renderUsers(allUsers);
+            })
+            .catch(() => alert('Xóa thất bại!'));
+        }
+    }
+});
+
+// Đóng popup sửa
+document.getElementById('edit-cancel').onclick = function() {
+    document.getElementById('edit-popup').style.display = 'none';
+};
+
+// Submit form sửa
+document.getElementById('edit-form').onsubmit = function(e) {
+    e.preventDefault();
+    const name = document.getElementById('edit-name').value;
+    const email = document.getElementById('edit-email').value;
+    const phone = document.getElementById('edit-phone').value;
+    fetch(`http://localhost:3000/api/admin/users/${editingUserId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ name, email, phone })
+    })
+    .then(res => res.json())
+    .then(() => {
+        // Cập nhật thành công, reload lại danh sách
+        return fetch('http://localhost:3000/api/admin/users', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+    })
+    .then(res => res.json())
+    .then(result => {
+        allUsers = result.data;
+        renderUsers(allUsers);
+        document.getElementById('edit-popup').style.display = 'none';
+    })
+    .catch(() => alert('Cập nhật thất bại!'));
+};

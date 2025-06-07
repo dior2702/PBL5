@@ -228,3 +228,11 @@ body {
 .user-menu ul li:hover {
   background-color: #f0f0f0;
 }
+/* Thêm vào cuối file department.css */
+.btn-edit, .btn-delete {
+    margin: 0 5px;
+    transition: transform 0.1s;
+}
+.btn-edit:hover, .btn-delete:hover {
+    transform: scale(1.2);
+}

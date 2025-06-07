@@ -32,7 +32,7 @@
     <div class="container">
         <!-- Thanh tìm kiếm -->
         <div class="search-box">
-            <input type="text" id="search" placeholder="Search employee name">
+            <input type="text" id="search" placeholder="Search by ID">
             <button class="btn-search">Search</button>
             <button class="btn-add">Add Department</button>
         </div>
@@ -43,9 +43,26 @@
             <div class="info-item">Name</div>
             <div class="info-item">Email</div>
             <div class="info-item">Phone</div>
+            <div class="info-item">Actions</div>
         </div>
 
          <div id="user-list"></div>
-   
+   <div class="popup" id="edit-popup">
+  <div class="popup-content">
+    <h2>Sửa thông tin nhân viên</h2>
+    <form id="edit-form">
+      <label for="edit-name">Name</label>
+      <input type="text" id="edit-name" name="name" required>
+      <label for="edit-email">Email</label>
+      <input type="email" id="edit-email" name="email" required>
+      <label for="edit-phone">Phone</label>
+      <input type="text" id="edit-phone" name="phone" required>
+      <div class="popup-buttons">
+        <button type="submit" class="btn-submit">Lưu</button>
+        <button type="button" class="btn-cancel" id="edit-cancel">Hủy</button>
+      </div>
+    </form>
+  </div>
+</div>
 </body>
 </html>
