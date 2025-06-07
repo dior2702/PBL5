@@ -6,10 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const data = {
                 email: document.getElementById('signupEmail').value,
                 password: document.getElementById('signupPassword').value,
-                fullName: document.getElementById('fullName').value,
-                department: document.getElementById('department').value,
-                position: document.getElementById('position').value,
-                employeeId: document.getElementById('employeeId').value
+                fullName: document.getElementById('name').value,
+                phone: document.getElementById('phone').value
             };
             try {
                 const res = await fetch('http://localhost:3000/api/users/register', {
