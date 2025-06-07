@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     // Kiểm tra role và điều hướng phù hợp
     
-    if (data.role === 'admin') {
-        window.location.href = 'Department.html';
+    if (data.role && data.role.trim().toLowerCase() === 'admin') {
+        window.location.href = 'Dashboard.html';
     } else {
         window.location.href = 'UserDashboard.html';
     }
