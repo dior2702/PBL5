@@ -1,25 +1,30 @@
-//Sự kiện tìm kiếm bằng tìm kiếm theo userId qua API
+const token = localStorage.getItem('token');
+
+// Sự kiện tìm kiếm bằng userId qua API, có dùng token
 document.querySelector('.btn-search').addEventListener('click', function () {
     const searchValue = document.getElementById('search').value.trim();
     const userList = document.getElementById('user-list');
     if (searchValue === '') {
-        // Nếu không nhập gì, hiển thị lại toàn bộ danh sách
         renderUsers(allUsers);
         return;
     }
-    fetch(`http://localhost:3000/api/admin/users/${searchValue}`)
+    fetch(`http://localhost:3000/api/admin/users/${searchValue}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
         .then(res => {
             if (!res.ok) throw new Error('User not found');
             return res.json();
         })
         .then(user => {
-            // Nếu API trả về 1 user object
             renderUsers([user]);
         })
         .catch(() => {
             userList.innerHTML = '<div style="text-align:center;color:red;">Không tìm thấy nhân viên</div>';
         });
 });
+
 
 // Hàm render danh sách nhân viên
 function renderUsers(users) {
@@ -39,15 +44,18 @@ function renderUsers(users) {
     });
 }
 
-// Lấy danh sách nhân viên từ API khi trang tải
+// Lấy danh sách nhân viên từ API khi trang tải, có dùng token
 let allUsers = [];
-fetch('http://localhost:3000/api/admin/users')
+fetch('http://localhost:3000/api/admin/users', {
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+})
     .then(res => res.json())
     .then(data => {
         allUsers = data;
         renderUsers(allUsers);
     });
-
 
 // Xử lý sự kiện click vào avatar để hiển thị popup
 document.addEventListener('DOMContentLoaded', () => {
