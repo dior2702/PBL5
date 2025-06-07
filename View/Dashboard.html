@@ -34,39 +34,19 @@
       <div class="time-box">
         <label for="date">Chọn ngày:</label>
         <input type="date" id="date" name="date" max="">
+        <input type="text" id="search-user" placeholder="Nhập User ID">
+        <button id="btn-filter">Lọc</button>
     </div>
-    <script>
-        // Tự động thiết lập giá trị max cho input date là ngày hiện tại
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('date').setAttribute('max', today);
-    </script>
+    
   
       <!-- Hàng chứa các phần Name, Department, Login Time, Status -->
       <div class="info-row header-row">
+          <div class="info-item">ID</div>
           <div class="info-item">Name</div>
-          <div class="info-item">Department</div>
           <div class="info-item">Login Time</div>
           <div class="info-item">Status</div>
       </div>
-      <!-- Dữ liệu mẫu -->
-    <div class="info-row">
-      <div class="info-item">Phan Hùng</div>
-      <div class="info-item">IT</div>
-      <div class="info-item">08:00 AM</div>
-      <div class="info-item">Present</div>
-  </div>
-  <div class="info-row">
-      <div class="info-item">Lê Minh</div>
-      <div class="info-item">HR</div>
-      <div class="info-item">08:15 AM</div>
-      <div class="info-item">Late</div>
-  </div>
-  <div class="info-row">
-      <div class="info-item">Lê Nhật</div>
-      <div class="info-item">Finance</div>
-      <div class="info-item">08:00 AM</div>
-      <div class="info-item">Present</div>
-  </div>
+     <div id="attendance-list"></div>
   </div>
 </body>
 </html>

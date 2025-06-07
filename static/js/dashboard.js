@@ -32,3 +32,74 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = 'Homepage.html';
   });
 });
+const token = localStorage.getItem('token');
+
+// Hàm render danh sách chấm công
+function renderAttendance(attendance, allUsers, filterDate) {
+    const list = document.getElementById('attendance-list');
+    list.innerHTML = '';
+    // Tạo map userId -> attendance trong ngày
+    const attMap = {};
+    attendance.forEach(a => {
+        const date = new Date(a.timestamp).toISOString().split('T')[0];
+        if (!attMap[a.userId]) attMap[a.userId] = {};
+        attMap[a.userId][date] = a;
+    });
+
+    allUsers.forEach(user => {
+        const date = filterDate;
+        const att = attMap[user.userId] && attMap[user.userId][date];
+        let loginTime = att ? new Date(att.timestamp).toLocaleTimeString() : '';
+        let status = att ? (att.type === 'check_in' ? 'Present' : att.type) : 'Absent';
+        const row = document.createElement('div');
+        row.className = 'info-row';
+        row.innerHTML = `
+            <div class="info-item">${user.userId}</div>
+            <div class="info-item">${user.name || ''}</div>
+            <div class="info-item">${loginTime}</div>
+            <div class="info-item">${status}</div>
+        `;
+        list.appendChild(row);
+    });
+}
+
+// Lấy danh sách user
+let allUsers = [];
+fetch('http://localhost:3000/api/admin/users', {
+    headers: { 'Authorization': `Bearer ${token}` }
+})
+.then(res => res.json())
+.then(result => {
+    allUsers = result.data;
+});
+
+// Hàm lấy và lọc chấm công
+function fetchAttendance() {
+    const date = document.getElementById('date').value;
+    const userId = document.getElementById('search-user').value.trim();
+    let url = 'http://localhost:3000/api/admin/attendance?';
+    if (date) {
+        url += `startDate=${date}T00:00:00.000Z&endDate=${date}T23:59:59.999Z&`;
+    }
+    if (userId) {
+        url += `userId=${userId}`;
+    }
+    fetch(url, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    })
+    .then(res => res.json())
+    .then(result => {
+        renderAttendance(result.data, allUsers, date);
+    });
+}
+
+// Sự kiện lọc
+document.getElementById('btn-filter').onclick = fetchAttendance;
+
+// Thiết lập ngày mặc định là hôm nay
+document.addEventListener('DOMContentLoaded', () => {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date').setAttribute('max', today);
+    document.getElementById('date').value = today;
+    setTimeout(fetchAttendance, 500); // Đợi allUsers load xong
+});
