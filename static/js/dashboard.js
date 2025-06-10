@@ -38,31 +38,45 @@ const token = localStorage.getItem('token');
 function renderAttendance(attendance, allUsers, filterDate) {
     const list = document.getElementById('attendance-list');
     list.innerHTML = '';
-    // Tạo map userId -> attendance trong ngày
+    // Tạo map userId -> các attendance trong ngày
     const attMap = {};
     attendance.forEach(a => {
         const date = new Date(a.timestamp).toISOString().split('T')[0];
         if (!attMap[a.userId]) attMap[a.userId] = {};
-        attMap[a.userId][date] = a;
+        if (!attMap[a.userId][date]) attMap[a.userId][date] = [];
+        attMap[a.userId][date].push(a);
     });
 
-    allUsers.forEach(user => {
+    // Lấy userId từ ô tìm kiếm
+    const userIdFilter = document.getElementById('search-user').value.trim();
+
+    // Nếu có nhập userId thì chỉ render user đó, không thì render tất cả
+    let usersToRender = allUsers;
+    if (userIdFilter) {
+        usersToRender = allUsers.filter(u => u.userId === userIdFilter);
+    }
+
+    usersToRender.forEach(user => {
         const date = filterDate;
-        const att = attMap[user.userId] && attMap[user.userId][date];
-        let loginTime = att ? new Date(att.timestamp).toLocaleTimeString() : '';
-        let status = att ? (att.type === 'check_in' ? 'Present' : att.type) : 'Absent';
+        const attArr = attMap[user.userId] && attMap[user.userId][date] ? attMap[user.userId][date] : [];
+        // Tìm check_in và check_out
+        const checkIn = attArr.find(a => a.type === 'check_in');
+        const checkOut = attArr.find(a => a.type === 'check_out');
+        let loginTime = checkIn ? new Date(checkIn.timestamp).toLocaleTimeString() : '';
+        let logoutTime = checkOut ? new Date(checkOut.timestamp).toLocaleTimeString() : '';
+        let status = checkIn ? 'Present' : 'Absent';
         const row = document.createElement('div');
         row.className = 'info-row';
         row.innerHTML = `
             <div class="info-item">${user.userId}</div>
             <div class="info-item">${user.name || ''}</div>
             <div class="info-item">${loginTime}</div>
+            <div class="info-item">${logoutTime}</div>
             <div class="info-item">${status}</div>
         `;
         list.appendChild(row);
     });
 }
-
 // Lấy danh sách user
 let allUsers = [];
 fetch('http://localhost:3000/api/admin/users', {
