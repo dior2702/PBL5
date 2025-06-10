@@ -22,7 +22,7 @@
             <img src="../static/img/avt.jpg" alt="User Avatar">
             <div class="user-menu" id="user-menu">
                 <ul>
-                    <li id="logout">Đăng xuất</li>
+                    <li id="logout">Log out</li>
                 </ul>
             </div>
         </div>
@@ -30,12 +30,12 @@
     <div class="container">
         <!-- Box điều chỉnh thời gian -->
         <div class="time-box">
-            <label for="date">Chọn ngày:</label>
+            <label for="date">Select Date:</label>
             <input type="date" id="date" name="date" max="">
         </div>
         <script>
             // Tự động thiết lập giá trị max cho input date là ngày hiện tại
-            const today = new Date().toISOString().split('T')[0];
+            const today = new Date().toLocaleDateString('en-CA');
             document.getElementById('date').setAttribute('max', today);
         </script>
 

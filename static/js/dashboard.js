@@ -98,7 +98,7 @@ document.getElementById('btn-filter').onclick = fetchAttendance;
 
 // Thiết lập ngày mặc định là hôm nay
 document.addEventListener('DOMContentLoaded', () => {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toLocaleDateString('en-CA');
     document.getElementById('date').setAttribute('max', today);
     document.getElementById('date').value = today;
     setTimeout(fetchAttendance, 500); // Đợi allUsers load xong

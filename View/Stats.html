@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - KEVFB</title>
-    <link rel="stylesheet" href="../static/css/dashboard.css">
+    <title>Stats - KEVFB</title>
+    <link rel="stylesheet" href="../static/css/stats.css">
     <link rel="stylesheet" href="../static/css/header.css">
     <script src="../static/js/header.js" defer></script>
-    <script src="../static/js/dashboard.js" defer></script>
+    <script src="../static/js/stats.js" defer></script>
 </head>
 <body>
     <div class="header">
@@ -29,24 +29,22 @@
           </div>
         </div>
     </div>
+    <main>
+    <h2 style="text-align:center;margin:24px 0;">Employee Attendance Statistics</h2>
     <div class="container">
-      <!-- Box điều chỉnh thời gian -->
-      <div class="time-box">
-        <label for="date">Select Date:</label>
-        <input type="date" id="date" name="date" max="">
-        <input type="text" id="search-user" placeholder="Enter User ID">
-        <button id="btn-filter">Filter</button>
+        <table id="stats-table" style="width:100%;border-collapse:collapse;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Total Attendance</th>
+                    <th>Check-in Count</th>
+                    <th>Check-out Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dữ liệu sẽ được thêm bằng JS -->
+            </tbody>
+        </table>
     </div>
-    
-  
-      <!-- Hàng chứa các phần Name, Department, Login Time, Status -->
-      <div class="info-row header-row">
-          <div class="info-item">ID</div>
-          <div class="info-item">Name</div>
-          <div class="info-item">Login Time</div>
-          <div class="info-item">Status</div>
-      </div>
-     <div id="attendance-list"></div>
-  </div>
-</body>
-</html>
+</main>
