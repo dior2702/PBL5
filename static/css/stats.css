@@ -165,3 +165,79 @@ body {
 .user-menu ul li:hover {
   background-color: #f0f0f0;
 }
+#stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 17px;
+}
+
+#stats-table thead {
+    background: linear-gradient(90deg, #7ab6ef 60%, #b3e0ff 100%);
+}
+
+#stats-table th, #stats-table td {
+    padding: 14px 12px;
+    text-align: center;
+}
+
+#stats-table th {
+    color: #222;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #7ab6ef;
+}
+
+#stats-table tbody tr {
+    transition: background 0.2s;
+}
+
+#stats-table tbody tr:nth-child(even) {
+    background: #f6faff;
+}
+
+#stats-table tbody tr:hover {
+    background: #e3f1ff;
+}
+
+#stats-table td {
+    border-bottom: 1px solid #e0e0e0;
+    color: #333;
+}
+
+#stats-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Responsive cho bảng */
+@media (max-width: 800px) {
+    #stats-table, #stats-table thead, #stats-table tbody, #stats-table th, #stats-table td, #stats-table tr {
+        display: block;
+    }
+    #stats-table thead {
+        display: none;
+    }
+    #stats-table tr {
+        margin-bottom: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        background: #fff;
+    }
+    #stats-table td {
+        padding: 12px;
+        text-align: right;
+        position: relative;
+    }
+    #stats-table td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 12px;
+        top: 12px;
+        font-weight: bold;
+        color: #7ab6ef;
+        text-align: left;
+    }
+}
