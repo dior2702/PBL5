@@ -62,8 +62,8 @@ function renderAttendance(attendance, allUsers, filterDate) {
         // Tìm check_in và check_out
         const checkIn = attArr.find(a => a.type === 'check_in');
         const checkOut = attArr.find(a => a.type === 'check_out');
-        let loginTime = checkIn ? new Date(checkIn.timestamp).toLocaleTimeString() : '';
-        let logoutTime = checkOut ? new Date(checkOut.timestamp).toLocaleTimeString() : '';
+        let loginTime = checkIn ? new Date(checkIn.timestamp).toLocaleTimeString() : 'underfined';
+        let logoutTime = checkOut ? new Date(checkOut.timestamp).toLocaleTimeString() : 'underfined';
         let status = checkIn ? 'Present' : 'Absent';
         const row = document.createElement('div');
         row.className = 'info-row';
@@ -112,7 +112,7 @@ document.getElementById('btn-filter').onclick = fetchAttendance;
 
 // Thiết lập ngày mặc định là hôm nay
 document.addEventListener('DOMContentLoaded', () => {
-    const today = new Date().toLocaleDateString('en-CA');
+    const today = new Date().toISOString().split('T')[0];
     document.getElementById('date').setAttribute('max', today);
     document.getElementById('date').value = today;
     setTimeout(fetchAttendance, 500); // Đợi allUsers load xong

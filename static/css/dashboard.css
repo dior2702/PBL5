@@ -139,3 +139,21 @@ body {
 .user-menu ul li:hover {
   background-color: #f0f0f0;
 }
+
+#btn-filter {
+  padding: 8px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #3498db 60%, #7ab6ef 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 12px;
+  box-shadow: 0 2px 8px #7ab6ef55;
+  transition: background 0.2s, transform 0.2s;
+}
+#btn-filter:hover {
+  background: linear-gradient(90deg, #0056b3 60%, #3498db 100%);
+  transform: translateY(-2px) scale(1.04);
+}

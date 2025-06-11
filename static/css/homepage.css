@@ -103,14 +103,11 @@ body {
 
 /* Overlay */
 .overlay {
-    display: none; /* Ẩn overlay mặc định */
+    display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Màu nền tối với độ trong suốt */
-    z-index: 998; /* Đặt dưới form popup */
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
+    z-index: 998;
 }
 
 /* Hiển thị overlay khi form popup mở */
@@ -134,20 +131,25 @@ body {
     background-color: #0056b3;
 }
 
+/* Form popup hiện đại */
 .form-popup {
     display: none;
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    border: 1px solid #ccc;
+    border: none;
     z-index: 999;
-    background-color: white;
-    padding: 40px; /* Tăng kích thước padding */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    color: #333; /* Đảm bảo màu chữ hiển thị rõ ràng */
-    border-radius: 10px;
-    width: 400px; /* Tăng kích thước chiều rộng */
+    background: #fff;
+    padding: 48px 36px 36px 36px;
+    box-shadow: 0 8px 32px #7ab6ef55;
+    color: #333;
+    border-radius: 18px;
+    width: 420px;
+    animation: popupShow 0.25s;
+}
+@keyframes popupShow {
+    from { transform: translate(-50%, -60%) scale(0.95); opacity: 0; }
+    to   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 }
 
 .form-container {
@@ -157,66 +159,116 @@ body {
 }
 
 .form-container h2 {
-    margin-bottom: 20px;
-    color: #007BFF;
-    font-size: 24px; /* Tăng kích thước font */
+    margin-bottom: 24px;
+    color: #3498db;
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
 }
 
 .form-container label {
-    display: inline-block;
-    align-items: center;
-    margin-bottom: 10px;
-    font-size: 16px; /* Tăng kích thước font */
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #007BFF;
+    font-weight: 500;
 }
 
 .form-container label i {
     margin-right: 10px;
 }
-/* ...existing code... */
-.form-container select {
-    padding: 15px;           /* Tăng kích thước padding giống input */
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    font-size: 16px;         /* Tăng kích thước font giống input */
-    background-color: #fff;
-    color: #333;
-}
-/* ...existing code... */
+
 .form-container input {
-    padding: 15px; /* Tăng kích thước padding */
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    font-size: 16px; /* Tăng kích thước font */
+    padding: 14px;
+    border: 1px solid #b3e0ff;
+    border-radius: 6px;
+    margin-bottom: 18px;
+    font-size: 16px;
+    background: #f8fbff;
+    transition: border 0.2s;
+}
+.form-container input:focus {
+    border: 1.5px solid #3498db;
+    outline: none;
 }
 
 .form-container button {
-    padding: 15px; /* Tăng kích thước padding */
+    padding: 14px;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
-    background-color: #007BFF;
+    background: linear-gradient(90deg, #3498db 60%, #7ab6ef 100%);
     color: white;
-    font-size: 18px; /* Tăng kích thước font */
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 8px;
+    transition: background 0.2s, transform 0.2s;
 }
-
 .form-container button:hover {
-    background-color: #0056b3;
+    background: linear-gradient(90deg, #0056b3 60%, #3498db 100%);
+    transform: translateY(-2px) scale(1.04);
 }
 
 .form-container .btn.cancel {
-    background-color: transparent;
+    background: transparent;
     color: #333;
-    font-size: 24px; /* Tăng kích thước font */
+    font-size: 24px;
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 18px;
+    right: 18px;
     border: none;
     cursor: pointer;
-    z-index: 9999; /* Đảm bảo nút hủy luôn hiển thị trên cùng */
+    z-index: 9999;
+    transition: color 0.2s;
+}
+.form-container .btn.cancel:hover {
+    color: #e74c3c;
 }
 
-.form-container .btn.cancel:hover {
-    color: red;
+/* Responsive */
+@media (max-width: 900px) {
+    .container, .intro {
+        flex-direction: column;
+        padding: 32px 8px;
+        gap: 24px;
+    }
+    .intro-text, .intro-image {
+        width: 100%;
+        padding: 0;
+        text-align: center;
+    }
+    .intro-image img {
+        margin: 0 auto;
+    }
+    .form-popup {
+        width: 95vw;
+        min-width: 0;
+        padding: 32px 8px;
+    }
+}
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.password-wrapper input {
+    width: 100%;
+    padding-right: 38px;
+    
+}
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    bottom: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    font-size: 18px;
+    z-index: 2;
+    transition: color 0.2s;
+    
+    
+}
+.toggle-password:hover {
+    color: #3498db;
 }

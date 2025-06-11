@@ -139,3 +139,96 @@ body {
 .user-menu ul li:hover {
   background-color: #f0f0f0;
 }
+
+
+.user-info {
+  margin: 40px auto;
+  max-width: 420px;
+  background: linear-gradient(135deg, #e3f0ff 0%, #f8fbff 100%);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px #b3e0ff55;
+  padding: 36px 32px 32px 32px;
+  font-size: 18px;
+  transition: box-shadow 0.2s;
+}
+
+.user-info:hover {
+  box-shadow: 0 8px 32px #7ab6ef88;
+}
+
+.user-info h2 {
+  text-align: center;
+  margin-bottom: 28px;
+  color: #3498db;
+  font-size: 28px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+#profile-content {
+  margin-top: 12px;
+  color: #222;
+}
+
+.profile-row {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e0eafc;
+  font-size: 18px;
+  transition: background 0.2s;
+}
+
+.profile-row:last-child {
+  border-bottom: none;
+}
+
+.profile-icon {
+  font-size: 22px;
+  margin-right: 12px;
+  color: #7ab6ef;
+  width: 32px;
+  text-align: center;
+}
+
+#profile-content strong {
+  color: #3498db;
+  min-width: 110px;
+  display: inline-block;
+  font-weight: 600;
+}
+
+
+.dialog-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-info.dialog {
+  position: relative;
+  animation: popupShow 0.25s;
+}
+
+@keyframes popupShow {
+  from { transform: scale(0.8); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.dialog-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-size: 28px;
+  color: #888;
+  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+.dialog-close:hover {
+  color: #e74c3c;
+}

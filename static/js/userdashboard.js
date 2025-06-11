@@ -31,4 +31,41 @@ document.addEventListener('DOMContentLoaded', () => {
   logout.addEventListener('click', () => {
     window.location.href = 'Homepage.html';
   });
+  const overlay = document.getElementById('profile-dialog-overlay');
+  const closeBtn = document.getElementById('close-profile-dialog');
+
+  // Hiển thị dialog và fetch profile ngay khi load trang
+  overlay.style.display = 'flex';
+  const token = localStorage.getItem('token');
+  if (token) {
+    fetch('http://localhost:3000/api/users/profile', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
+      .then(res => res.json())
+      .then(result => {
+        if (result.success && result.data) {
+          const user = result.data;
+          document.getElementById('profile-content').innerHTML = `
+            <div class="profile-row"><span class="profile-icon">🆔</span><strong>ID:</strong> ${user.userId || ''}</div>
+            <div class="profile-row"><span class="profile-icon">👤</span><strong>Name:</strong> ${user.name || ''}</div>
+            <div class="profile-row"><span class="profile-icon">📧</span><strong>Email:</strong> ${user.email || ''}</div>
+            <div class="profile-row"><span class="profile-icon">📞</span><strong>Phone:</strong> ${user.phone || ''}</div>
+          `;
+        } else {
+          document.getElementById('profile-content').innerHTML = 'Không lấy được thông tin người dùng!';
+        }
+      })
+      .catch(() => {
+        document.getElementById('profile-content').innerHTML = 'Lỗi kết nối!';
+      });
+  }
+
+  closeBtn.addEventListener('click', () => {
+    overlay.style.display = 'none';
+  });
+
+  // Đóng dialog khi click ra ngoài
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.style.display = 'none';
+  });
 });

@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 let editingUserId = null;
+let deletingUserId = null;
 
 // Sự kiện click nút Sửa và Xóa
 document.getElementById('user-list').addEventListener('click', function(e) {
@@ -99,35 +100,56 @@ document.getElementById('user-list').addEventListener('click', function(e) {
         document.getElementById('edit-popup').style.display = 'flex';
     }
     if (e.target.classList.contains('btn-delete')) {
-        // Xóa
+        // Hiện dialog xác nhận xóa
         const userId = e.target.getAttribute('data-id');
-        if (confirm('Bạn có chắc chắn muốn xóa nhân viên này?')) {
-            fetch(`http://localhost:3000/api/admin/users/${userId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            .then(res => res.json())
-            .then(() => {
-                // Xóa thành công, reload lại danh sách
-                return fetch('http://localhost:3000/api/admin/users', {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-            })
-            .then(res => res.json())
-            .then(result => {
-                allUsers = result.data;
-                renderUsers(allUsers);
-            })
-            .catch(() => alert('Xóa thất bại!'));
-        }
+        deletingUserId = userId;
+        const user = allUsers.find(u => u.userId === userId);
+        document.getElementById('delete-message').innerText =
+            `Do you really want to delete "${user ? user.name : ''}" (ID: ${userId})?`;
+        document.getElementById('delete-popup').style.display = 'flex';
     }
 });
 
 // Đóng popup sửa
 document.getElementById('edit-cancel').onclick = function() {
     document.getElementById('edit-popup').style.display = 'none';
+};
+
+// Đóng popup xóa
+document.getElementById('delete-close').onclick =
+document.getElementById('delete-cancel').onclick = function() {
+    document.getElementById('delete-popup').style.display = 'none';
+    deletingUserId = null;
+};
+
+// Xác nhận xóa
+document.getElementById('delete-confirm').onclick = function() {
+    if (!deletingUserId) return;
+    fetch(`http://localhost:3000/api/admin/users/${deletingUserId}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(res => res.json())
+    .then(() => {
+        // Xóa thành công, reload lại danh sách
+        return fetch('http://localhost:3000/api/admin/users', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+    })
+    .then(res => res.json())
+    .then(result => {
+        allUsers = result.data;
+        renderUsers(allUsers);
+        document.getElementById('delete-popup').style.display = 'none';
+        deletingUserId = null;
+    })
+    .catch(() => {
+        alert('Xóa thất bại!');
+        document.getElementById('delete-popup').style.display = 'none';
+        deletingUserId = null;
+    });
 };
 
 // Submit form sửa

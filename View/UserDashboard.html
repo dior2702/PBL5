@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard - KEVFB</title>
+    <title>User Dashboard - KEVSCAN</title>
     <link rel="stylesheet" href="../static/css/userdashboard.css">
     <link rel="stylesheet" href="../static/css/header.css">
     <script src="../static/js/header.js" defer></script>
@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="header">
-        <img src="../static/img/logo.svg" alt="Logo" class="logo">
+        <img src="../static/img/logokevscan.svg" alt="Logo" class="logo">
         <nav>
             <ul>
                 <li><a href="UserDashboard.html">Dashboard</a></li>
@@ -27,25 +27,15 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        <!-- Box điều chỉnh thời gian -->
-        <div class="time-box">
-            <label for="date">Select Date:</label>
-            <input type="date" id="date" name="date" max="">
-        </div>
-        <script>
-            // Tự động thiết lập giá trị max cho input date là ngày hiện tại
-            const today = new Date().toLocaleDateString('en-CA');
-            document.getElementById('date').setAttribute('max', today);
-        </script>
+     </div>
+    <!-- <button id="show-profile-btn" style="margin: 32px auto; display: block;">Your Account</button> -->
 
-        <!-- Hàng chứa các phần Name, Department, Login Time, Status -->
-        <div class="info-row header-row">
-            <div class="info-item">Name</div>
-            <div class="info-item">Department</div>
-            <div class="info-item">Login Time</div>
-            <div class="info-item">Status</div>
-        </div>
-    </div>
+<div id="profile-dialog-overlay" class="dialog-overlay" style="display:none;">
+  <div class="user-info dialog">
+      <span class="dialog-close" id="close-profile-dialog">&times;</span>
+      <h2>Profile</h2>
+      <div id="profile-content"></div>
+  </div>
+</div>
 </body>
 </html>

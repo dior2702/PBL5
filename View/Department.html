@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Department - KEVFB</title>
+    <title>Department - KEVSCAN</title>
     <link rel="stylesheet" href="../static/css/department.css">
     <link rel="stylesheet" href="../static/css/header.css">
     <script src="../static/js/header.js" defer></script>
@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="header">
-        <img src="../static/img/logo.svg" alt="Logo" class="logo">
+        <img src="../static/img/logokevscan.svg" alt="Logo" class="logo">
         <nav>
             <ul>
                 <li><a href="Dashboard.html">Dashboard</a></li>
@@ -49,6 +49,7 @@
          <div id="user-list"></div>
    <div class="popup" id="edit-popup">
   <div class="popup-content">
+    
     <h2>Edit Employee Information</h2>
     <form id="edit-form">
       <label for="edit-name">Name</label>
@@ -62,6 +63,18 @@
         <button type="button" class="btn-cancel" id="edit-cancel">Cancel</button>
       </div>
     </form>
+  </div>
+</div>
+
+<div class="popup" id="delete-popup">
+  <div class="popup-content">
+    <button type="button" class="close-dialog" id="delete-close">&times;</button>
+    <h3 style="color:#f44336;">Confirm Deletion</h3>
+    <p id="delete-message" style="text-align:center;margin:18px 0 28px 0;font-size:17px;">Do you really want to delete this employee?</p>
+    <div class="popup-buttons">
+      <button type="button" class="btn-submit" id="delete-confirm">Delete</button>
+      <button type="button" class="btn-cancel" id="delete-cancel">Cancel</button>
+    </div>
   </div>
 </div>
 </body>

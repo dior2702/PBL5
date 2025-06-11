@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang chủ - KEVFB</title>
+    <title>Trang chủ - KEVSCAN</title>
     <link rel="stylesheet" href="../static/css/homepage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../static/css/header.css">
@@ -19,7 +19,7 @@
     <div id="header">
     </div>
     <div class="header">
-        <img src="../static/img/logo.svg" alt="Logo" class="logo">
+        <img src="../static/img/logokevscan.svg" alt="Logo" class="logo">
     
    
         <div class="buttons">
@@ -33,26 +33,28 @@
     <div class="container">
         <div class="intro">
             <div class="intro-text">
-                <h1>Giới thiệu công ty</h1>
+                <h1>I'm KevScan</h1>
                 <p>
-                    Chào mừng bạn đến với hệ thống chấm công thông minh của KEVFB – giải pháp hiện đại giúp doanh nghiệp tối ưu hóa quy trình quản lý thời gian làm việc của nhân viên. Với giao diện thân thiện, dễ sử dụng và tính năng linh hoạt, hệ thống KEVFB hỗ trợ chấm công nhanh chóng, theo dõi ca làm việc, xuất báo cáo chi tiết và đồng bộ dữ liệu theo thời gian thực.
-                Chúng tôi cam kết mang đến trải nghiệm quản lý nhân sự hiệu quả, minh bạch và chính xác nhất cho doanh nghiệp của bạn.
+                    KevScan is a smart facial recognition attendance system designed to simplify and secure employee check-ins. By leveraging advanced AI technology, KevScan ensures fast, accurate, and contactless time tracking — perfect for modern workplaces seeking efficiency, transparency, and automation in daily attendance management.
                 </p>
             </div>
             <div class="intro-image">
-                <img src="../static/img/intro.jpg" alt="Giới thiệu công ty">
+                <img src="../static/img/homee.svg" alt="introduce">
             </div>
         </div>
     </div>
     <!-- ...existing code... -->
 <div class="form-popup" id="loginForm">
     <form class="form-container">
-        <h2>Đăng nhập</h2>
+        <h2>Login</h2>
         <label for="email"><i class="fas fa-envelope"></i> Email:</label>
         <input type="email" id="email" name="email" required>
-        <label for="password"><i class="fas fa-lock"></i> Mật khẩu:</label>
-        <input type="password" id="password" name="password" required>
-        <button type="submit">Đăng nhập</button>
+        <label for="password"><i class="fas fa-lock"></i> Password:</label>
+        <div class="password-wrapper">
+            <input type="password" id="password" name="password" required>
+            <span class="toggle-password" toggle="#password"><i class="fas fa-eye"></i></span>
+        </div>
+        <button type="submit">Login</button>
         <button type="button" class="btn cancel" onclick="closeForm('loginForm')"><i class="fas fa-times"></i></button>
     </form>
 </div>
@@ -60,18 +62,21 @@
    <!-- ...existing code... -->
 <div class="form-popup" id="signupForm">
     <form class="form-container" id="signupFormElement">
-        <h2>Đăng ký</h2>
-        <label for="userId"><i class="fas fa-id-badge"></i> Mã nhân viên:</label>
+        <h2>Sign Up</h2>
+        <label for="userId"><i class="fas fa-id-badge"></i> User ID:</label>
         <input type="text" id="userId" name="userId" required>
-        <label for="name"><i class="fas fa-user"></i> Họ tên:</label>
+        <label for="name"><i class="fas fa-user"></i> Full Name:</label>
         <input type="text" id="name" name="name" required>
         <label for="signupEmail"><i class="fas fa-envelope"></i> Email:</label>
         <input type="email" id="signupEmail" name="email" required>
-        <label for="signupPassword"><i class="fas fa-lock"></i> Mật khẩu:</label>
-        <input type="password" id="signupPassword" name="password" required>
-        <label for="phone"><i class="fas fa-phone"></i> Số điện thoại:</label>
+        <label for="signupPassword"><i class="fas fa-lock"></i> Password:</label>
+<div class="password-wrapper">
+    <input type="password" id="signupPassword" name="password" required>
+    <span class="toggle-password" toggle="#signupPassword"><i class="fas fa-eye"></i></span>
+</div>
+        <label for="phone"><i class="fas fa-phone"></i> Phone:</label>
         <input type="text" id="phone" name="phone" required>
-        <button type="submit">Đăng ký</button>
+        <button type="submit">Sign Up</button>
         <button type="button" class="btn cancel" onclick="closeForm('signupForm')"><i class="fas fa-times"></i></button>
     </form>
 </div>
