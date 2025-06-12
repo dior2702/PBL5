@@ -1,0 +1,411 @@
+body {
+    background-color: #f5fbff;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #7ab6ef;
+    color: white;
+    padding: 10px 20px;
+    height: 100px;
+  }
+  
+  .header .logo {
+    max-height: 150px; /* Logo sẽ không vượt quá chiều cao của header */
+    max-width: 150px; /* Giới hạn chiều rộng tối đa */
+    object-fit: contain; /* Đảm bảo logo không bị méo */
+    
+  }
+  .header nav {
+    flex-grow: 1;
+  }
+  
+  .header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 50px;
+    margin: 0;
+    padding: 0;
+    margin-right: auto;
+  }
+  
+  .header nav ul li a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .user-avatar img {
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+.container {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    height: 650px;
+}
+
+.search-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    gap: 10px;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.search-box input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.search-box .btn-search,
+.search-box .btn-add {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.search-box .btn-add {
+    background-color: #28a745;
+}
+
+.search-box .btn-search:hover,
+.search-box .btn-add:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.search-box .btn-add:hover {
+    background-color: #218838;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+}
+
+.info-row.header-row {
+    font-weight: bold;
+    background-color: #f4f4f4;
+}
+
+.info-item {
+    flex: 1;
+    text-align: center;
+  
+}
+/* --Profile-- */
+.user-avatar {
+  position: relative; /* Đặt avatar làm gốc tham chiếu */
+}
+.user-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #000000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 150px;
+  border-radius: 4px;
+}
+
+.user-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.user-menu ul li {
+  color: black;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.user-menu ul li:hover {
+  background-color: #f0f0f0;
+}
+
+/* CSS */
+.shift-title {
+    text-align: center;
+    margin-bottom: 24px;
+    color: #3498db;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.info-row.header-row {
+  background: linear-gradient(90deg, #7ab6ef 60%, #b3e0ff 100%);
+  color: #000000;
+  font-weight: 700;
+  border-radius: 8px 8px 0 0;
+}
+
+.info-row {
+  display: flex;
+  border-bottom: 1px solid #e0eafc;
+  background: #fff;
+  border-radius: 0 0 8px 8px;
+  transition: background 0.2s;
+}
+
+/* .info-row:hover {
+  background: #f5fbff;
+} */
+
+.info-item {
+  flex: 1;
+  padding: 14px 10px;
+  text-align: center;
+  font-size: 17px;
+}
+
+/* Popup overlay */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.35);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.2s;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Popup content */
+.popup-content {
+    background: linear-gradient(135deg, #e3f0ff 0%, #f8fbff 100%);
+    padding: 32px 28px 24px 28px;
+    border-radius: 18px;
+    width: 380px;
+    box-shadow: 0 8px 32px #7ab6ef33;
+    position: relative;
+    animation: popupShow 0.25s;
+}
+@keyframes popupShow {
+    from { transform: scale(0.95); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
+.popup-content h2 {
+    margin-bottom: 24px;
+    text-align: center;
+    color: #3498db;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.popup-content form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #3498db;
+}
+
+.popup-content form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 18px;
+    border: 1.5px solid #b3e0ff;
+    border-radius: 8px;
+    font-size: 16px;
+    background: #f8fbff;
+    transition: border 0.2s;
+    box-shadow: 0 2px 8px #b3e0ff22;
+}
+.popup-content form input:focus {
+    border: 1.5px solid #3498db;
+    outline: none;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 8px;
+}
+
+.popup-buttons .btn-submit,
+.popup-buttons .btn-cancel {
+    flex: 1;
+    padding: 12px 0;
+    border: none;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px #b3e0ff22;
+}
+
+.popup-buttons .btn-submit {
+    background: linear-gradient(90deg, #4CAF50 60%, #7ab6ef 100%);
+    color: white;
+    margin-right: 8px;
+}
+.popup-buttons .btn-submit:hover {
+    background: linear-gradient(90deg, #218838 60%, #3498db 100%);
+    transform: translateY(-2px) scale(1.04);
+}
+
+.popup-buttons .btn-cancel {
+    background: linear-gradient(90deg, #f44336 60%, #b3e0ff 100%);
+    color: white;
+}
+.popup-buttons .btn-cancel:hover {
+    background: linear-gradient(90deg, #c82333 60%, #3498db 100%);
+    transform: translateY(-2px) scale(1.04);
+}
+
+/* Nút đóng dialog */
+.popup-content .close-dialog {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    font-size: 28px;
+    color: #888;
+    cursor: pointer;
+    font-weight: bold;
+    transition: color 0.2s;
+    background: none;
+    border: none;
+}
+.popup-content .close-dialog:hover {
+    color: #e74c3c;
+}
+
+.inactive-shift {
+    opacity: 0.5;
+    filter: grayscale(0.5);
+    pointer-events: none; /* Nếu muốn không cho thao tác nữa */
+}
+
+#user-shift-info .info-item {
+    text-align: center;
+    color: #000000;
+    font-weight: 600;
+}
+#user-shift-container .btn-add {
+    background: #4CAF50;
+    color: #fff;
+    margin-left: 8px;
+}
+#user-shift-container .btn-cancel {
+    background: #f44336;
+    color: #fff;
+    margin-left: 8px;
+}
+#user-shift-container .btn-add:hover {
+    background: #218838;
+}
+#user-shift-container .btn-cancel:hover {
+    background: #c82333;
+}
+
+.search-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    gap: 10px;
+}
+
+.search-box input {
+    flex: none;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    margin-right: 0;
+}
+#user-shift-container .btn-add,
+#user-shift-container .btn-cancel {
+    
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    /* Các thuộc tính màu giữ nguyên */
+}
+
+#btn-user-shift-search {
+    margin-left: 0;
+}
+
+#btn-user-shift-register,
+#btn-user-shift-remove {
+    min-width: 110px;
+}
+
+
+#btn-create-shift {
+    background: #4CAF50;
+    color: #fff;
+    min-width: 110px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#btn-create-shift:hover {
+    background: #218838;
+}

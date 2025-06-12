@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shift - KEVSCAN</title>
+    <link rel="stylesheet" href="../static/css/shift.css">
+    <link rel="stylesheet" href="../static/css/header.css">
+    <script src="../static/js/header.js" defer></script>
+    <script src="../static/js/shift.js" defer></script>
+</head>
+<body>
+    <div class="header">
+        <img src="../static/img/logokevscan.svg" alt="Logo" class="logo">
+        <nav>
+            <ul>
+                <li><a href="Dashboard.html">Dashboard</a></li>
+                <li><a href="Department.html">Department</a></li>
+                <li><a href="Shift.html">Shift</a></li>
+                <li><a href="Stats.html">Stats</a></li>
+            </ul>
+        </nav>
+        <div class="user-avatar">
+            <img src="../static/img/avt.jpg" alt="User Avatar">
+            <div class="user-menu" id="user-menu">
+              <ul>
+                  
+                  <li id="logout">Log out</li>
+              </ul>
+          </div>
+        </div>
+    </div>
+    <div class="container">
+    <h2 class="shift-title">Danh sách ca làm</h2>
+    <div style="margin-bottom: 18px; text-align: right;">
+  <button id="btn-create-shift" class="btn-add">Tạo mới ca</button>
+</div>
+    <div class="info-row header-row">
+        <div class="info-item">Tên ca</div>
+        <div class="info-item">Bắt đầu</div>
+        <div class="info-item">Kết thúc</div>
+        <div class="info-item">Trạng thái</div>
+        <div class="info-item">Mô tả</div>
+        <div class="info-item">Action</div>
+    </div>
+    <div id="shift-list"></div>
+</div>
+<div class="popup" id="create-shift-popup">
+  <div class="popup-content">
+   <button type="button" class="close-dialog" id="create-shift-close">&times;</button>
+    <h2>Tạo ca làm mới</h2>
+    <form id="create-shift-form">
+      <label for="create-shift-name">Tên ca</label>
+      <input type="text" id="create-shift-name" placeholder="Tên ca" required />
+      <label for="create-shift-start">Giờ bắt đầu</label>
+      <input type="time" id="create-shift-start" placeholder="Giờ bắt đầu" required />
+      <label for="create-shift-end">Giờ kết thúc</label>
+      <input type="time" id="create-shift-end" placeholder="Giờ kết thúc" required />
+      <label for="create-shift-tolerance">Số phút đi muộn cho phép</label>
+      <input type="number" id="create-shift-tolerance" placeholder="Số phút đi muộn cho phép" required />
+      <label for="create-shift-desc">Mô tả</label>
+      <input type="text" id="create-shift-desc" name="description">
+      <div class="popup-buttons">
+        <button type="submit" class="btn-submit">Lưu</button>
+        <button type="button" class="btn-cancel" id="create-shift-cancel">Hủy</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="popup" id="edit-shift-popup">
+  <div class="popup-content">
+    <button type="button" class="close-dialog" id="edit-shift-close">&times;</button>
+    <h2>Chỉnh sửa ca làm</h2>
+    <form id="edit-shift-form">
+      <label for="edit-shift-name">Tên ca</label>
+      <input type="text" id="edit-shift-name" name="shiftName" required>
+      <label for="edit-shift-start">Giờ bắt đầu (HH:mm)</label>
+      <input type="time" id="edit-shift-start" name="shiftStart" required>
+      <label for="edit-shift-end">Giờ kết thúc (HH:mm)</label>
+      <input type="time" id="edit-shift-end" name="shiftEnd" required>
+      
+      <label for="edit-shift-desc">Mô tả</label>
+      <input type="text" id="edit-shift-desc" name="description">
+      <div class="popup-buttons">
+        <button type="submit" class="btn-submit">Lưu</button>
+        <button type="button" class="btn-cancel" id="edit-shift-cancel">Hủy</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="popup" id="delete-shift-popup">
+  <div class="popup-content">
+    <button type="button" class="close-dialog" id="delete-shift-close">&times;</button>
+    <h2 style="color:#f44336;">Xác nhận xóa</h2>
+    <p id="delete-shift-message" style="text-align:center;margin:18px 0 28px 0;font-size:17px;">Bạn có chắc chắn muốn xóa ca này?</p>
+    <div class="popup-buttons">
+      <button type="button" class="btn-submit" id="delete-shift-confirm">Xóa</button>
+      <button type="button" class="btn-cancel" id="delete-shift-cancel">Hủy</button>
+    </div>
+  </div>
+</div>
+<div class="container" id="user-shift-container">
+  <h2 class="shift-title">Danh sách nhận ca</h2>
+  <div class="search-box" style="margin-bottom: 18px;">
+  <div style="display:flex;flex:1;align-items:center;gap:0;">
+    <input type="text" id="user-shift-userid" placeholder="Nhập User ID..." style="max-width:180px; min-width:120px; width:180px; margin-right:0;" />
+    <button id="btn-user-shift-search" class="btn-search" style="margin-left:0;">Tìm</button>
+  </div>
+  <div style="display:flex;gap:8px;">
+    <button id="btn-user-shift-register" class="btn-add">Đăng ký ca</button>
+    <button id="btn-user-shift-remove" class="btn-cancel">Xóa ca</button>
+  </div>
+</div>
+  <div class="info-row" id="user-shift-info" style="display:none;">
+    <div class="info-item" id="user-shift-name" ></div>
+</div>
+  <div class="info-row header-row">
+    <div class="info-item">Tên ca</div>
+    <div class="info-item">Bắt đầu</div>
+    <div class="info-item">Kết thúc</div>
+    <div class="info-item">Mô tả</div>
+  </div>
+  <div id="user-shift-list"></div>
+</div>
+<div class="popup" id="assign-shift-popup">
+  <div class="popup-content">
+    <button type="button" class="close-dialog" id="assign-shift-close">&times;</button>
+    <h2>Đăng ký ca cho User</h2>
+    <form id="assign-shift-form">
+      <label for="assign-user-id">User ID</label>
+      <input type="text" id="assign-user-id" name="userId" required>
+      <label for="assign-shift-name">Tên ca</label>
+      <input type="text" id="assign-shift-name" name="shiftName" required placeholder="Nhập đúng tên ca (ví dụ: Ca_Sang)">
+      <div class="popup-buttons">
+        <button type="submit" class="btn-submit">Đăng ký</button>
+        <button type="button" class="btn-cancel" id="assign-shift-cancel">Hủy</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="popup" id="remove-shift-popup">
+  <div class="popup-content">
+    <button type="button" class="close-dialog" id="remove-shift-close">&times;</button>
+    <h2 style="color:#f44336;">Hủy ca cho User</h2>
+    <form id="remove-shift-form">
+      <label for="remove-user-id">User ID</label>
+      <input type="text" id="remove-user-id" name="userId" required>
+      <label for="remove-shift-name">Tên ca</label>
+      <input type="text" id="remove-shift-name" name="shiftName" required placeholder="Nhập đúng tên ca (ví dụ: Ca_Sang)">
+      <div class="popup-buttons">
+        <button type="submit" class="btn-submit">Hủy ca</button>
+        <button type="button" class="btn-cancel" id="remove-shift-cancel">Hủy</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="popup" id="notify-popup">
+  <div class="popup-content">
+    <h2 id="notify-title" style="text-align:center; color:#3498db; margin-bottom:18px;">Thông báo</h2>
+    <div id="notify-message" style="text-align:center; font-size:17px; margin-bottom:24px;"></div>
+    <div class="popup-buttons" style="justify-content:center;">
+      <button type="button" class="btn-submit" id="notify-ok">OK</button>
+    </div>
+  </div>
+</div>

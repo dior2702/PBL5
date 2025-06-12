@@ -65,11 +65,16 @@ function renderAttendance(attendance, allUsers, filterDate) {
         let loginTime = checkIn ? new Date(checkIn.timestamp).toLocaleTimeString() : 'underfined';
         let logoutTime = checkOut ? new Date(checkOut.timestamp).toLocaleTimeString() : 'underfined';
         let status = checkIn ? 'Present' : 'Absent';
+        let shift = (user.assignedShifts && user.assignedShifts.length > 0)
+        ? user.assignedShifts.map(s => s.shiftName).join(', ')
+        : 'None';
         const row = document.createElement('div');
         row.className = 'info-row';
+        row.id = `attendance-row-${user.userId}`; // Thêm id cho dòng
         row.innerHTML = `
             <div class="info-item">${user.userId}</div>
             <div class="info-item">${user.name || ''}</div>
+            <div class="info-item">${shift}</div>
             <div class="info-item">${loginTime}</div>
             <div class="info-item">${logoutTime}</div>
             <div class="info-item">${status}</div>
@@ -106,6 +111,34 @@ function fetchAttendance() {
         renderAttendance(result.data, allUsers, date);
     });
 }
+
+function updateAttendanceRow(newAttendance) {
+    const userId = newAttendance.userId;
+    const $row = $(`#attendance-row-${userId}`);
+    if ($row.length) {
+        if (newAttendance.type === 'check_in') {
+            $row.find('.login-time').text(new Date(newAttendance.timestamp).toLocaleTimeString());
+            $row.find('.status').text('Present');
+        }
+        if (newAttendance.type === 'check_out') {
+            $row.find('.logout-time').text(new Date(newAttendance.timestamp).toLocaleTimeString());
+        }
+    }
+}
+
+
+setInterval(function() {
+    const date = document.getElementById('date').value;
+    fetch(`http://localhost:3000/api/admin/attendance?startDate=${date}T00:00:00.000Z&endDate=${date}T23:59:59.999Z`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    })
+    .then(res => res.json())
+    .then(result => {
+        // Cập nhật từng dòng nếu có check_in/check_out mới
+        result.data.forEach(updateAttendanceRow);
+    });
+}, 3000); // Poll mỗi 3 giây
+
 
 // Sự kiện lọc
 document.getElementById('btn-filter').onclick = fetchAttendance;
