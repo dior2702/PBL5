@@ -168,17 +168,18 @@ document.getElementById('delete-shift-confirm').onclick = function() {
         headers: { 'Authorization': `Bearer ${token}` }
       });
     } else {
-      throw new Error(result.message || 'Xóa thất bại!');
+      throw new Error(result.message || 'Delete Error!');
     }
   })
   .then(res => res.json())
   .then(result => {
     renderShifts(result.data);
+    showNotifyDialog('Delete Success!', true);
     document.getElementById('delete-shift-popup').style.display = 'none';
     deletingShiftId = null;
   })
   .catch(err => {
-    alert(err.message || 'Xóa thất bại!');
+    showNotifyDialog(err.message || 'Delete Error!', false);
     document.getElementById('delete-shift-popup').style.display = 'none';
     deletingShiftId = null;
   });
@@ -214,10 +215,11 @@ document.getElementById('edit-shift-form').onsubmit = function(e) {
   .then(res => res.json())
   .then(result => {
     renderShifts(result.data);
+    showNotifyDialog('Update Success!', true);
     document.getElementById('edit-shift-popup').style.display = 'none';
     editingShiftId = null;
   })
-  .catch(err => alert(err.message || 'Update Error!'));
+  .catch(err => showNotifyDialog(err.message || 'Update Error!', false));
 };
 document.getElementById('btn-user-shift-search').onclick = function() {
   const userId = document.getElementById('user-shift-userid').value.trim();
@@ -295,7 +297,7 @@ document.getElementById('assign-shift-close').onclick = function() {
 };
 
 function showNotifyDialog(message, isSuccess = true) {
-  document.getElementById('notify-title').innerText = isSuccess ? 'Thành công' : 'Thất bại';
+  document.getElementById('notify-title').innerText = isSuccess ? 'Success' : 'Error';
   document.getElementById('notify-title').style.color = isSuccess ? '#27ae60' : '#e74c3c';
   document.getElementById('notify-message').innerText = message;
   document.getElementById('notify-popup').style.display = 'flex';
