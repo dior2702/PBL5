@@ -97,8 +97,10 @@ body {
 }
 
 .info-row.header-row {
-  font-weight: bold;
-  background-color: #f4f4f4;
+  background: linear-gradient(90deg, #7ab6ef 60%, #b3e0ff 100%);
+  color: #000000;
+  font-weight: 700;
+  border-radius: 8px 8px 0 0;
 }
 
 .info-item {
