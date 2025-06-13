@@ -39,8 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${user.userId}</td>
             <td>${user.name || ''}</td>
             <td>${user.totalAttendance}</td>
-            <td>${user.checkIns}</td>
-            <td>${user.checkOuts}</td>
+           
           `;
           tbody.appendChild(tr);
         });

@@ -35,80 +35,68 @@ document.addEventListener('DOMContentLoaded', () => {
 const token = localStorage.getItem('token');
 
 // Hàm render danh sách chấm công
-function renderAttendance(attendance, allUsers, filterDate) {
+let allUsers = [];
+function renderAttendance(attendance, allUsers) {
     const list = document.getElementById('attendance-list');
     list.innerHTML = '';
-    // Tạo map userId -> các attendance trong ngày
+
+    // Gom dữ liệu chấm công theo userId
     const attMap = {};
     attendance.forEach(a => {
-        const date = new Date(a.timestamp).toISOString().split('T')[0];
-        if (!attMap[a.userId]) attMap[a.userId] = {};
-        if (!attMap[a.userId][date]) attMap[a.userId][date] = [];
-        attMap[a.userId][date].push(a);
+        if (!attMap[a.userId]) attMap[a.userId] = [];
+        attMap[a.userId].push(a);
     });
 
-    // Lấy userId từ ô tìm kiếm
+    // Lọc theo userId nếu có nhập
     const userIdFilter = document.getElementById('search-user').value.trim();
-
-    // Nếu có nhập userId thì chỉ render user đó, không thì render tất cả
     let usersToRender = allUsers;
     if (userIdFilter) {
         usersToRender = allUsers.filter(u => u.userId === userIdFilter);
     }
 
     usersToRender.forEach(user => {
-        const date = filterDate;
-        const attArr = attMap[user.userId] && attMap[user.userId][date] ? attMap[user.userId][date] : [];
-        // Tìm check_in và check_out
-        const checkIn = attArr.find(a => a.type === 'check_in');
-        const checkOut = attArr.find(a => a.type === 'check_out');
-        let loginTime = checkIn ? new Date(checkIn.timestamp).toLocaleTimeString() : 'underfined';
-        let logoutTime = checkOut ? new Date(checkOut.timestamp).toLocaleTimeString() : 'underfined';
-        let status = checkIn ? 'Present' : 'Absent';
-        let shift = (user.assignedShifts && user.assignedShifts.length > 0)
-        ? user.assignedShifts.map(s => s.shiftName).join(', ')
-        : 'None';
+        const attArr = attMap[user.userId] || [];
+
+        // Tìm bản ghi chấm công mới nhất
+        const latest = attArr.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
+
+        let loginTime = latest?.checkIn?.time || 'undefined';
+        let logoutTime = latest?.checkOut?.time || 'undefined';
+        let status = latest ? latest.status : 'Absent';
+        let shift = latest ? latest.shiftName : (user.assignedShifts?.map(s => s.shiftName).join(', ') || 'None');
+
         const row = document.createElement('div');
         row.className = 'info-row';
-        row.id = `attendance-row-${user.userId}`; // Thêm id cho dòng
+        row.id = `attendance-row-${user.userId}`;
         row.innerHTML = `
             <div class="info-item">${user.userId}</div>
             <div class="info-item">${user.name || ''}</div>
             <div class="info-item">${shift}</div>
-            <div class="info-item">${loginTime}</div>
-            <div class="info-item">${logoutTime}</div>
-            <div class="info-item">${status}</div>
+            <div class="info-item login-time">${loginTime}</div>
+            <div class="info-item logout-time">${logoutTime}</div>
+            <div class="info-item status">${status}</div>
         `;
         list.appendChild(row);
     });
-}
-// Lấy danh sách user
-let allUsers = [];
-fetch('http://localhost:3000/api/admin/users', {
-    headers: { 'Authorization': `Bearer ${token}` }
-})
-.then(res => res.json())
-.then(result => {
-    allUsers = result.data;
-});
+} // <-- Đóng hàm renderAttendance TẠI ĐÂY
 
-// Hàm lấy và lọc chấm công
+// ✅ Di chuyển fetchAttendance() RA NGOÀI, để toàn cục
 function fetchAttendance() {
-    const date = document.getElementById('date').value;
+    
     const userId = document.getElementById('search-user').value.trim();
-    let url = 'http://localhost:3000/api/admin/attendance?';
-    if (date) {
-        url += `startDate=${date}T00:00:00.000Z&endDate=${date}T23:59:59.999Z&`;
-    }
+    let url = `http://localhost:3000/api/admin/attendance?`;
+
     if (userId) {
-        url += `userId=${userId}`;
+        url += `&userId=${userId}`;
     }
+
     fetch(url, {
         headers: { 'Authorization': `Bearer ${token}` }
     })
     .then(res => res.json())
     .then(result => {
-        renderAttendance(result.data, allUsers, date);
+        console.log('Attendance fetched:', result.data);
+        renderAttendance(result.data, allUsers);
     });
 }
 
@@ -116,20 +104,30 @@ function updateAttendanceRow(newAttendance) {
     const userId = newAttendance.userId;
     const $row = $(`#attendance-row-${userId}`);
     if ($row.length) {
-        if (newAttendance.type === 'check_in') {
-            $row.find('.login-time').text(new Date(newAttendance.timestamp).toLocaleTimeString());
-            $row.find('.status').text('Present');
-        }
-        if (newAttendance.type === 'check_out') {
-            $row.find('.logout-time').text(new Date(newAttendance.timestamp).toLocaleTimeString());
-        }
+        const loginTime = newAttendance.checkIn?.time || 'undefined';
+        const logoutTime = newAttendance.checkOut?.time || 'undefined';
+        const status = newAttendance.status;
+
+        $row.find('.login-time').text(loginTime);
+        $row.find('.logout-time').text(logoutTime);
+        $row.find('.status').text(status);
     }
 }
 
+// Fetch all users và gọi fetchAttendance
+fetch('http://localhost:3000/api/admin/users', {
+    headers: { 'Authorization': `Bearer ${token}` }
+})
+.then(res => res.json())
+.then(result => {
+    allUsers = result.data;
+    fetchAttendance();
+});
+
 
 setInterval(function() {
-    const date = document.getElementById('date').value;
-    fetch(`http://localhost:3000/api/admin/attendance?startDate=${date}T00:00:00.000Z&endDate=${date}T23:59:59.999Z`, {
+    
+    fetch(`http://localhost:3000/api/admin/attendance`, {
         headers: { 'Authorization': `Bearer ${token}` }
     })
     .then(res => res.json())
@@ -148,5 +146,5 @@ document.addEventListener('DOMContentLoaded', () => {
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('date').setAttribute('max', today);
     document.getElementById('date').value = today;
-    setTimeout(fetchAttendance, 500); // Đợi allUsers load xong
+    // setTimeout(fetchAttendance, 500); // Đợi allUsers load xong
 });

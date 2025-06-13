@@ -48,9 +48,7 @@ function renderShifts(shifts) {
       <div class="info-item">${shift.shiftStart || ''}</div>
       <div class="info-item">${shift.shiftEnd || ''}</div>
       
-      <div class="info-item" style="color:${shift.isActive ? '#27ae60' : '#e74c3c'};">
-        ${shift.isActive ? 'True' : 'False'}
-      </div>
+     
       <div class="info-item">${shift.description || ''}</div>
       <div class="info-item">
         <button class="btn-edit" data-id="${shift._id}" title="Sửa" style="background:none;border:none;cursor:pointer;font-size:18px;">✏️</button>
@@ -79,11 +77,11 @@ document.getElementById('create-shift-form').onsubmit = function(e) {
   const shiftName = document.getElementById('create-shift-name').value.trim();
   const shiftStart = document.getElementById('create-shift-start').value;
   const shiftEnd = document.getElementById('create-shift-end').value;
-  const toleranceMinutes = parseInt(document.getElementById('create-shift-tolerance').value);
+  const toleranceMinutes = document.getElementById('create-shift-tolerance').value.trim();
   const description = document.getElementById('create-shift-desc').value.trim();
 
   if (!shiftName || !shiftStart || !shiftEnd || isNaN(toleranceMinutes)) {
-    showNotifyDialog('Vui lòng nhập đầy đủ thông tin!', false);
+    showNotifyDialog('Please enter complete information!', false);
     return;
   }
 
@@ -113,7 +111,7 @@ document.getElementById('create-shift-form').onsubmit = function(e) {
     if (result.data) renderShifts(result.data);
   })
   .catch(err => {
-    showNotifyDialog(err.message || 'Tạo ca thất bại!', false);
+    showNotifyDialog(err.message || 'Create Shift Error!', false);
   });
 };
 // Sự kiện Edit/Delete
@@ -126,7 +124,7 @@ document.getElementById('shift-list').addEventListener('click', function(e) {
     document.getElementById('edit-shift-name').value = shift.shiftName || '';
     document.getElementById('edit-shift-start').value = shift.shiftStart || '';
     document.getElementById('edit-shift-end').value = shift.shiftEnd || '';
-    
+    document.getElementById('edit-shift-tolerance').value = shift.toleranceMinutes || 15;
     document.getElementById('edit-shift-desc').value = shift.description || '';
     document.getElementById('edit-shift-popup').style.display = 'flex';
   }
@@ -134,7 +132,7 @@ document.getElementById('shift-list').addEventListener('click', function(e) {
     const shift = allShifts.find(s => s._id === shiftId);
     deletingShiftId = shiftId;
     document.getElementById('delete-shift-message').innerText =
-      `Bạn có chắc chắn muốn xóa ca "${shift ? shift.shiftName : ''}"?`;
+      `Are you sure you want to delete the shift "${shift ? shift.shiftName : ''}"?`;
     document.getElementById('delete-shift-popup').style.display = 'flex';
   }
 });
@@ -192,7 +190,7 @@ document.getElementById('edit-shift-form').onsubmit = function(e) {
   const shiftName = document.getElementById('edit-shift-name').value;
   const shiftStart = document.getElementById('edit-shift-start').value;
   const shiftEnd = document.getElementById('edit-shift-end').value;
-  
+  const toleranceMinutes = document.getElementById('edit-shift-tolerance').value;
   const description = document.getElementById('edit-shift-desc').value;
   fetch(`http://localhost:3000/api/admin/shifts/${editingShiftId}`, {
     method: 'PUT',
@@ -210,7 +208,7 @@ document.getElementById('edit-shift-form').onsubmit = function(e) {
         headers: { 'Authorization': `Bearer ${token}` }
       });
     } else {
-      throw new Error(result.message || 'Cập nhật thất bại!');
+      throw new Error(result.message || 'Update Error!');
     }
   })
   .then(res => res.json())
@@ -219,7 +217,7 @@ document.getElementById('edit-shift-form').onsubmit = function(e) {
     document.getElementById('edit-shift-popup').style.display = 'none';
     editingShiftId = null;
   })
-  .catch(err => alert(err.message || 'Cập nhật thất bại!'));
+  .catch(err => alert(err.message || 'Update Error!'));
 };
 document.getElementById('btn-user-shift-search').onclick = function() {
   const userId = document.getElementById('user-shift-userid').value.trim();
@@ -243,7 +241,7 @@ document.getElementById('btn-user-shift-search').onclick = function() {
         document.getElementById('user-shift-name').innerText = `${userName}`;
         document.getElementById('user-shift-info').style.display = 'flex';
       } else {
-        document.getElementById('user-shift-name').innerText = 'Không tìm thấy user!';
+        document.getElementById('user-shift-name').innerText = 'Not Found';
         document.getElementById('user-shift-info').style.display = 'flex';
       }
 
@@ -335,10 +333,10 @@ document.getElementById('assign-shift-form').onsubmit = function(e) {
         document.getElementById('btn-user-shift-search').click();
       }
     } else {
-      showNotifyDialog(result.message || 'Đăng ký ca thất bại!', false);
+      showNotifyDialog(result.message || 'Assign Shift Error!', false);
     }
   })
-  .catch(err => showNotifyDialog(err.message || 'Đăng ký ca thất bại!', false));
+  .catch(err => showNotifyDialog(err.message || 'Assign Shift Error!', false));
 };
 
 // Mở popup xóa ca khi bấm nút
@@ -375,15 +373,15 @@ document.getElementById('remove-shift-form').onsubmit = function(e) {
   .then(res => res.json())
   .then(result => {
     if (result.success) {
-      showNotifyDialog('Hủy ca thành công!', true);
+      showNotifyDialog('Remove Shift Success!', true);
       document.getElementById('remove-shift-popup').style.display = 'none';
       // Reload lại danh sách ca nhận nếu đang xem đúng user
       if (document.getElementById('user-shift-userid').value.trim() === userId) {
         document.getElementById('btn-user-shift-search').click();
       }
     } else {
-      showNotifyDialog(result.message || 'Hủy ca thất bại!', false);
+      showNotifyDialog(result.message || 'Remove Shift Error!', false);
     }
   })
-  .catch(err => showNotifyDialog(err.message || 'Hủy ca thất bại!', false));
+  .catch(err => showNotifyDialog(err.message || 'Remove Shift Error!', false));
 };

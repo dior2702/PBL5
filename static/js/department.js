@@ -21,7 +21,7 @@ document.querySelector('.btn-search').addEventListener('click', function () {
             renderUsers([result.data]);
         })
         .catch(() => {
-            userList.innerHTML = '<div style="text-align:center;color:red;">Không tìm thấy nhân viên</div>';
+            userList.innerHTML = '<div style="text-align:center;color:red;">Not Found</div>';
         });
 });
 
@@ -179,5 +179,5 @@ document.getElementById('edit-form').onsubmit = function(e) {
         renderUsers(allUsers);
         document.getElementById('edit-popup').style.display = 'none';
     })
-    .catch(() => alert('Cập nhật thất bại!'));
+    .catch(() => alert('Update Error!'));
 };
